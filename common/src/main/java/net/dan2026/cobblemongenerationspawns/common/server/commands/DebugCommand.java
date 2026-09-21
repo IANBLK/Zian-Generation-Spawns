@@ -12,7 +12,7 @@ package net.dan2026.cobblemongenerationspawns.common.server.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
-import net.dan2026.cobblemongenerationspawns.common.server.spawns.SpawnFactors;
+import net.dan2026.cobblemongenerationspawns.common.server.spawns.SpawnFactors;\nimport net.dan2026.cobblemongenerationspawns.common.server.spawns.SpawnStats;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
