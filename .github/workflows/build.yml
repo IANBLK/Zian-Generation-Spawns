@@ -23,9 +23,42 @@ jobs:
           name: test-reports
           path: common/build/reports/tests/
           if-no-files-found: ignore
-      - name: Upload remapped candidate
+      - name: Prepare versioned JAR and checksum
+        id: package
+        shell: python
+        run: |
+          import hashlib
+          import os
+          import re
+          import shutil
+          from pathlib import Path
+
+          properties = {}
+          for line in Path("gradle.properties").read_text().splitlines():
+              if "=" in line and not line.lstrip().startswith("#"):
+                  key, value = line.split("=", 1)
+                  properties[key.strip()] = value.strip()
+          base = properties["archives_base_name"]
+          version = properties["mod_version"]
+          for value in (base, version):
+              if not re.fullmatch(r"[A-Za-z0-9._+-]+", value):
+                  raise ValueError("Invalid archive name or version")
+          filename = f"{base}-neoforge-{version}.jar"
+          source = Path("neoforge/build/libs") / filename
+          if not source.is_file():
+              raise FileNotFoundError(f"Remapped JAR missing: {source}")
+          destination = Path("build-artifacts")
+          destination.mkdir(exist_ok=True)
+          shutil.copy2(source, destination / filename)
+          digest = hashlib.sha256(source.read_bytes()).hexdigest()
+          (destination / "SHA256SUMS").write_text(f"{digest}  {filename}\n")
+          with open(os.environ["GITHUB_OUTPUT"], "a") as output:
+              output.write(f"artifact_name={base}-neoforge-{version}\n")
+      - name: Upload downloadable mod
         uses: actions/upload-artifact@v4
         with:
-          name: neoforge-candidate
-          path: neoforge/build/libs/zian-generation-spawns-neoforge-1.2.0-alpha.1.jar
+          name: ${{ steps.package.outputs.artifact_name }}-build-${{ github.run_number }}
+          path: |
+            build-artifacts/*.jar
+            build-artifacts/SHA256SUMS
           if-no-files-found: error

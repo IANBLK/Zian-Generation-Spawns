@@ -63,3 +63,11 @@ También está en la carpeta [`downloads`](downloads/). Esta es la misma alpha.1
 - [Autoría y condiciones originales](NOTICE.md)
 
 Código derivado bajo la [licencia original](LICENSE). No se han eliminado los créditos de DAN2026.
+
+## Descargas de nuevas versiones y correcciones
+
+Cada compilación correcta en GitHub Actions publica el JAR remapeado y su SHA-256 en un artefacto con la versión y el número de ejecución. La versión se lee automáticamente de `gradle.properties`; no hay que editar el workflow al cambiarla.
+
+Para descargar: **Actions → Build and test → ejecución correcta → Artifacts → zian-generation-spawns-neoforge-VERSION-build-N**. Extraer el ZIP e instalar el JAR. Los informes de pruebas se publican por separado; los JAR dev-slim/dev-shadow no se incluyen en la descarga.
+
+Este será el canal de descarga para las próximas versiones y fixes. La carpeta `downloads` conserva la alpha.1 inicial y no debe tomarse como indicador de la última compilación. Una ejecución fallida no publica un JAR instalable.
