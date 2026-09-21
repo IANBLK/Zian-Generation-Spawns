@@ -18,7 +18,7 @@ import com.cobblemon.mod.common.api.events.entity.SpawnEvent;
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import com.cobblemon.mod.common.api.reactive.ObservableSubscription;
 import com.cobblemon.mod.common.api.spawning.detail.PokemonSpawnDetail;
-import net.dan2026.cobblemongenerationspawns.common.server.spawns.SpawnFactors;
+import net.dan2026.cobblemongenerationspawns.common.server.spawns.SpawnFactors;\nimport net.dan2026.cobblemongenerationspawns.common.server.spawns.SpawnStats;
 
 public final class EventRegistry {
     private static ObservableSubscription<PokeSnackSpawnPokemonEvent.Pre> pokeSnackSubscription;
@@ -40,7 +40,9 @@ public final class EventRegistry {
         // even if their spawner missed our earlier SpawningInfluence registration.
         pokemonSpawnSubscription = CobblemonEvents.POKEMON_ENTITY_SPAWN.subscribe(Priority.HIGHEST, event -> {
             var species = event.getEntity().getPokemon().getSpecies();
-            if (!SpawnFactors.matchesActiveGeneration(species)) {
+            boolean allowed = SpawnFactors.matchesActiveGeneration(species);
+            SpawnStats.record(SpawnStats.Source.FINAL_EVENT, allowed, species == null ? null : species.getName());
+            if (!allowed) {
                 event.cancel();
             }
         });
