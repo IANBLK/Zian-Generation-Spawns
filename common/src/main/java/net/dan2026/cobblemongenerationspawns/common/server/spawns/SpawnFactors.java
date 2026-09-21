@@ -42,6 +42,18 @@ public class SpawnFactors implements SpawningInfluence {
         String name = pokemon.getPokemon().getSpecies();
         if (name == null) return false;
         Species species = PokemonSpecies.getByName(name);
+        return matchesActiveGeneration(species);
+    }
+
+    /**
+     * Final generation check for an already-created Pokemon entity.
+     *
+     * Cobblemon 1.8.x exposes a cancelable POKEMON_ENTITY_SPAWN event immediately
+     * before BestSpawner adds the entity to the world.  Keeping this check in
+     * addition to the SpawningInfluence makes generation locking fail closed even
+     * if a spawner was created before our influence builder was registered.
+     */
+    public static boolean matchesActiveGeneration(Species species) {
         return species != null && GenerationPolicy.allows(species.getLabels(), cachedGenerations);
     }
 
