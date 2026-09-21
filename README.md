@@ -2,7 +2,7 @@
 
 Adaptación de CobblemonGenerationSpawns de **DAN2026**, mantenida para el proyecto de **ZIANBLK**. Objetivo: Minecraft 1.21.1, NeoForge y Cobblemon 1.8.1.
 
-**Estado: versión de prueba 1.2.0-alpha.1 compilada; 8 pruebas automatizadas superadas. No validado todavía en un servidor ni en Youer.** La inspección del JAR aportado encuentra las 17 referencias directas del mod original a Cobblemon. Eso no certifica el arranque o la cobertura de todas las formas de aparición.
+**Estado: versión de prueba 1.2.0-alpha.2 compilada correctamente; 8 pruebas automatizadas superadas. Esta build incorpora el fix de bloqueo final mediante `POKEMON_ENTITY_SPAWN` y está pendiente de validación en juego/Youer.** La inspección del JAR aportado encuentra las 17 referencias directas del mod original a Cobblemon. Eso no certifica el arranque o la cobertura de todas las formas de aparición.
 
 ## Comportamiento
 
@@ -39,13 +39,23 @@ Windows PowerShell:
 .\gradlew.bat :common:test :neoforge:build
 ```
 
-Salida prevista: `neoforge/build/libs/zian-generation-spawns-neoforge-1.2.0-alpha.1.jar`. Usar únicamente el artefacto remapeado, no dev-slim ni dev-shadow. GitHub Actions incluye compilación y pruebas; un resultado correcto de compilación todavía requiere pruebas de juego.
+Salida prevista para esta prueba: `neoforge/build/libs/zian-generation-spawns-neoforge-1.2.0-alpha.2.jar`. Usar únicamente el artefacto remapeado, no dev-slim ni dev-shadow. GitHub Actions incluye compilación y pruebas; un resultado correcto de compilación todavía requiere pruebas de juego.
 
 ## Migración
 
 Se conserva `cobblemongenerationwaves_data` en los datos del Overworld. Las listas antiguas de otras dimensiones no se borran ni se fusionan automáticamente. Antes de sustituir el mod, guardar una copia del mundo y decidir manualmente qué generaciones deben quedar activas si existían listas distintas.
 
 Instalar solo esta variante o la original; comparten modId. Kotlin for Forge es una dependencia de Cobblemon, y debe cumplir los requisitos de su instalación.
+
+## Versión de prueba actual: 1.2.0-alpha.2
+
+Esta es la build que debe probarse ahora. Corrige el caso observado donde seguían apareciendo Pokémon en un mundo nuevo aunque no hubiera generaciones habilitadas, añadiendo una barrera cancelable en el evento final de spawn de Cobblemon además del filtro temprano existente.
+
+**Descarga:** [GitHub Actions · build correcta de alpha.2](https://github.com/IANBLK/Zian-Generation-Spawns/actions/runs/35583898823)
+
+En **Artifacts**, descargar **`zian-generation-spawns-neoforge-1.2.0-alpha.2-build-6`**. El ZIP contiene el JAR remapeado instalable y `SHA256SUMS`.
+
+Prueba mínima recomendada: mundo nuevo sin generaciones activas → esperar spawns naturales; después ejecutar `/generation enable gen1` y comprobar que aparecen Pokémon Gen 1 pero no Gen 2-9.
 
 ## Primera versión de prueba
 
