@@ -49,6 +49,10 @@ Instalar solo esta variante o la original; comparten modId. Kotlin for Forge es 
 
 ## Primera versión de prueba
 
+**[Descargar directamente zian-generation-spawns-neoforge-1.2.0-alpha.1.jar](https://github.com/IANBLK/Zian-Generation-Spawns/raw/refs/heads/main/downloads/zian-generation-spawns-neoforge-1.2.0-alpha.1.jar)**
+
+También está en la carpeta [`downloads`](downloads/). Esta es la misma alpha.1 compilada y verificada; sigue pendiente la prueba en servidor.
+
 [Compilación y descarga del artefacto](https://github.com/IANBLK/Zian-Generation-Spawns/actions/runs/35574119418) · [Verificación de alpha.1](docs/VERSION_ALPHA_1.md). El artefacto `neoforge-candidate` contiene el JAR remapeado.
 
 ## Revisión y próximos pasos
