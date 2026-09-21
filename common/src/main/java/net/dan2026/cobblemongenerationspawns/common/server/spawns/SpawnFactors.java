@@ -77,5 +77,5 @@ public class SpawnFactors implements SpawningInfluence {
     }
 
     public static Set<String> getCachedGenerations() { return cachedGenerations; }
-    public static void resetCache() { cachedGenerations = Set.of(); }
+    public static void resetCache() { cachedGenerations = Set.of(); SpawnStats.reset(); }
 }
