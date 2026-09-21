@@ -57,3 +57,8 @@ Se inspeccionaron los JSON bajo data/cobblemon/species: ninguno carecía de etiq
 Inspección binaria y revisión de JSON ejecutadas. El intento local de `:common:test :neoforge:build` no pudo descargar Gradle (Network is unreachable); además, el entorno local solo dispone de Java 17. Por tanto, ninguna prueba Java ni compilación local se declara superada.
 
 GitHub Actions prepara Java 21 y ejecuta las pruebas y la compilación. Consultar el resultado real en Actions; esta documentación no presupone que haya terminado correctamente. Aun con compilación correcta, quedan las pruebas de servidor de PRUEBAS.md, incluida la build exacta de Youer si se utiliza.
+
+
+### Resultado posterior: compilación de alpha.1
+
+GitHub Actions completó correctamente la compilación el 21-09-2026: ocho pruebas JUnit, cero fallos y cero omitidas. El JAR remapeado se descargó y se verificaron su integridad, metadatos, clases, licencia y ausencia de rutas duplicadas. Sus 17 referencias directas a Cobblemon también se encuentran en el JAR aportado. Ver VERSION_ALPHA_1.md. Las pruebas en servidor y Youer siguen pendientes.

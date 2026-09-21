@@ -2,7 +2,7 @@
 
 Adaptación de CobblemonGenerationSpawns de **DAN2026**, mantenida para el proyecto de **ZIANBLK**. Objetivo: Minecraft 1.21.1, NeoForge y Cobblemon 1.8.1.
 
-**Estado: desarrollo, 1.2.0-alpha.1. No validado todavía en un servidor ni en Youer.** La inspección del JAR aportado encuentra las 17 referencias directas del mod original a Cobblemon. Eso no certifica el arranque o la cobertura de todas las formas de aparición.
+**Estado: versión de prueba 1.2.0-alpha.1 compilada; 8 pruebas automatizadas superadas. No validado todavía en un servidor ni en Youer.** La inspección del JAR aportado encuentra las 17 referencias directas del mod original a Cobblemon. Eso no certifica el arranque o la cobertura de todas las formas de aparición.
 
 ## Comportamiento
 
@@ -46,6 +46,10 @@ Salida prevista: `neoforge/build/libs/zian-generation-spawns-neoforge-1.2.0-alph
 Se conserva `cobblemongenerationwaves_data` en los datos del Overworld. Las listas antiguas de otras dimensiones no se borran ni se fusionan automáticamente. Antes de sustituir el mod, guardar una copia del mundo y decidir manualmente qué generaciones deben quedar activas si existían listas distintas.
 
 Instalar solo esta variante o la original; comparten modId. Kotlin for Forge es una dependencia de Cobblemon, y debe cumplir los requisitos de su instalación.
+
+## Primera versión de prueba
+
+[Compilación y descarga del artefacto](https://github.com/IANBLK/Zian-Generation-Spawns/actions/runs/35574119418) · [Verificación de alpha.1](docs/VERSION_ALPHA_1.md). El artefacto `neoforge-candidate` contiene el JAR remapeado.
 
 ## Revisión y próximos pasos
 
