@@ -1,0 +1,18 @@
+OK com/cobblemon/mod/common/Cobblemon.LOGGERLorg/apache/logging/log4j/Logger;
+OK com/cobblemon/mod/common/api/Priority.NORMALLcom/cobblemon/mod/common/api/Priority;
+OK com/cobblemon/mod/common/api/events/CobblemonEvents.POKE_SNACK_SPAWN_POKEMON_PRELcom/cobblemon/mod/common/api/reactive/CancelableObservable;
+OK com/cobblemon/mod/common/api/spawning/BestSpawner.INSTANCELcom/cobblemon/mod/common/api/spawning/BestSpawner;
+OK com/cobblemon/mod/common/api/spawning/spawner/PlayerSpawnerFactory.INSTANCELcom/cobblemon/mod/common/api/spawning/spawner/PlayerSpawnerFactory;
+OK com/cobblemon/mod/common/api/events/cooking/PokeSnackSpawnPokemonEvent$Pre.cancel()V
+OK com/cobblemon/mod/common/api/events/cooking/PokeSnackSpawnPokemonEvent$Pre.getSpawnAction()Lcom/cobblemon/mod/common/api/spawning/detail/SpawnAction;
+OK com/cobblemon/mod/common/api/pokemon/PokemonProperties.getSpecies()Ljava/lang/String;
+OK com/cobblemon/mod/common/api/pokemon/PokemonSpecies.getByName(Ljava/lang/String;)Lcom/cobblemon/mod/common/pokemon/Species;
+OK com/cobblemon/mod/common/api/reactive/CancelableObservable.subscribe(Lcom/cobblemon/mod/common/api/Priority;Ljava/util/function/Consumer;)Lcom/cobblemon/mod/common/api/reactive/ObservableSubscription;
+OK com/cobblemon/mod/common/api/spawning/BestSpawner.getFishingSpawner()Lcom/cobblemon/mod/common/api/spawning/spawner/BasicSpawner;
+OK com/cobblemon/mod/common/api/spawning/detail/PokemonSpawnDetail.getPokemon()Lcom/cobblemon/mod/common/api/pokemon/PokemonProperties;
+OK com/cobblemon/mod/common/api/spawning/detail/SpawnAction.getDetail()Lcom/cobblemon/mod/common/api/spawning/detail/SpawnDetail;
+OK com/cobblemon/mod/common/api/spawning/spawner/BasicSpawner.getInfluences()Ljava/util/List;
+OK com/cobblemon/mod/common/api/spawning/spawner/PlayerSpawnerFactory.getInfluenceBuilders()Ljava/util/List;
+OK com/cobblemon/mod/common/pokemon/Species.getLabels()Ljava/util/HashSet;
+OK com/cobblemon/mod/common/api/spawning/influence/SpawningInfluence.affectSpawn(Lcom/cobblemon/mod/common/api/spawning/detail/SpawnAction;Lnet/minecraft/world/entity/Entity;)V
+TOTAL 17 MISSING 0

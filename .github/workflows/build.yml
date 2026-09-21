@@ -1,0 +1,31 @@
+name: Build and test
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Test generation policy and build NeoForge mod
+        run: bash gradlew :common:test :neoforge:build --no-daemon --stacktrace
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: common/build/reports/tests/
+          if-no-files-found: ignore
+      - name: Upload remapped candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: neoforge-candidate
+          path: neoforge/build/libs/zian-generation-spawns-neoforge-1.2.0-alpha.1.jar
+          if-no-files-found: error

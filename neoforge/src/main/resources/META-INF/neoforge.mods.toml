@@ -1,0 +1,34 @@
+modLoader = "javafml"
+loaderVersion = "[1,)"
+#issueTrackerURL = "A valid URL to your issue tracker where people can open bug tickets"
+license = "Cobblemon Generation Spawns License v1.0"
+
+[[mods]]
+modId = "cobblemongenerationspawns"
+version = "${version}"
+displayName = "Zian Generation Spawns"
+authors = "DAN2026 (original), ZIANBLK (adaptation)"
+description = '''
+A Cobblemon Side Mod that allows you to enable / disable certain generations from spawning.
+'''
+
+[[dependencies.cobblemongenerationspawns]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.1]"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.cobblemongenerationspawns]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1.182,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.cobblemongenerationspawns]]
+modId = "cobblemon"
+type = "required"
+versionRange = "[1.8.1,1.9)"
+ordering = "AFTER"
+side = "BOTH"

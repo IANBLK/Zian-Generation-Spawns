@@ -1,21 +1,53 @@
-.gradle
-**/build/
-!**/src/**/build/
-
-# Ignore Gradle GUI config
-gradle-app.setting
-
-# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
-!gradle-wrapper.jar
-
-# Avoid ignore Gradle wrappper properties
-!gradle-wrapper.properties
-
-# Cache of project
-.gradletasknamecache
-
-# Eclipse Gradle plugin generated files
-# Eclipse Core
-.project
-# JDT-specific (Eclipse Java Development Tools)
+# Eclipse
+bin/
+*.launch
+.settings/
+.metadata/
 .classpath
+.project
+/.architectury-transformer/
+eclipse/
+
+# IntelliJ IDEA
+out/
+*.ipr
+*.iws
+*.iml
+.idea/
+
+# Gradle
+.gradle/
+build/
+
+# VS Code
+.vscode/
+
+# Project Roots & Build Outputs
+/build/
+/.gradle/
+/common/build/
+/common/.gradle/
+/fabric/build/
+/fabric/.gradle/
+/neoforge/build/
+/neoforge/.gradle/
+/fabric/run/
+/neoforge/run/
+/common/run/
+
+# Forge MDK & Modding Artifacts
+forge*changelog.txt
+run/
+/logs/
+/showdown/
+common/src/main/resources/assets/cobblemon/showdown/
+
+# Generated Files
+*/generated/resources/*
+/fabric/src/generated/resources/cobblemon-common.accesswidener
+# Local dependency copies and server worlds
+libs/
+/server/
+/neoforge/server/
+*.log
+__pycache__/
