@@ -1,14 +1,3 @@
-/*
- *
- * Cobblemon: Generation Spawning - A NeoForge Minecraft Mod.
- *
- * Copyright (c) 2026 DAN2026. All rights reserved.
- *
- * This software is licensed under the CobblemonGenerationSpawning License v1.0.
- *  A copy of this License should have been included with this software.
- *  If not, you can obtain a copy at [https://github.com/DAN2026/CobblemonGenerationSpawning/blob/master/LICENSE].
- */
-
 package net.dan2026.cobblemongenerationspawns.common.server.spawns;
 
 import com.cobblemon.mod.common.Cobblemon;
@@ -21,40 +10,71 @@ import com.cobblemon.mod.common.pokemon.Species;
 import net.dan2026.cobblemongenerationspawns.common.server.data.GenerationData;
 import net.minecraft.server.level.ServerLevel;
 import org.jetbrains.annotations.NotNull;
+
 import java.util.Set;
 
 public class SpawnFactors implements SpawningInfluence {
-    // Readers always see a complete immutable snapshot, including during startup/reset.
     private static volatile Set<String> cachedGenerations = Set.of();
 
     @Override
     public boolean affectSpawnable(@NotNull SpawnDetail detail, @NotNull SpawnablePosition position) {
-        return !(detail instanceof PokemonSpawnDetail) || matchesActiveGeneration(detail);
+        if (!(detail instanceof PokemonSpawnDetail)) return true;
+        boolean allowed = matchesActiveGenerationInternal(detail);
+        SpawnStats.record(SpawnStats.Source.SPAWNABLE, allowed, speciesName(detail));
+        return allowed;
     }
 
     @Override
     public float affectWeight(@NotNull SpawnDetail detail, @NotNull SpawnablePosition position, float weight) {
-        return affectSpawnable(detail, position) ? weight : 0.0f;
+        if (!(detail instanceof PokemonSpawnDetail)) return weight;
+        boolean allowed = matchesActiveGenerationInternal(detail);
+        SpawnStats.record(SpawnStats.Source.WEIGHT, allowed, speciesName(detail));
+        return allowed ? weight : 0.0f;
     }
 
+    /** Used by the Poke Snack PRE filter. */
     public static boolean matchesActiveGeneration(SpawnDetail detail) {
+        boolean allowed = matchesActiveGenerationInternal(detail);
+        SpawnStats.record(SpawnStats.Source.SNACK, allowed, speciesName(detail));
+        return allowed;
+    }
+
+    private static boolean matchesActiveGenerationInternal(SpawnDetail detail) {
         if (!(detail instanceof PokemonSpawnDetail pokemon)) return false;
         String name = pokemon.getPokemon().getSpecies();
         if (name == null) return false;
-        Species species = PokemonSpecies.getByName(name);
+
+        String lookupName = name;
+        int colon = lookupName.indexOf(':');
+        if (colon >= 0 && colon + 1 < lookupName.length()) {
+            lookupName = lookupName.substring(colon + 1);
+        }
+
+        Species species;
+        try {
+            species = PokemonSpecies.getByName(lookupName);
+        } catch (RuntimeException failure) {
+            species = null;
+        }
+        if (species == null) SpawnStats.recordUnknown(name);
         return matchesActiveGeneration(species);
+    }
+
+    private static String speciesName(SpawnDetail detail) {
+        if (!(detail instanceof PokemonSpawnDetail pokemon)) return null;
+        return pokemon.getPokemon().getSpecies();
     }
 
     /**
      * Final generation check for an already-created Pokemon entity.
-     *
-     * Cobblemon 1.8.x exposes a cancelable POKEMON_ENTITY_SPAWN event immediately
-     * before BestSpawner adds the entity to the world.  Keeping this check in
-     * addition to the SpawningInfluence makes generation locking fail closed even
-     * if a spawner was created before our influence builder was registered.
+     * This keeps the proven alpha.2 behavior unchanged.
      */
     public static boolean matchesActiveGeneration(Species species) {
-        return species != null && GenerationPolicy.allows(species.getLabels(), cachedGenerations);
+        if (species == null) return false;
+        boolean hasGenerationLabel = species.getLabels().stream().anyMatch(label ->
+                GenerationPolicy.VALID_IDS.contains(label) || "gen7b".equals(label) || "gen8a".equals(label));
+        if (!hasGenerationLabel) SpawnStats.recordUnlabeled(species.getName());
+        return GenerationPolicy.allows(species.getLabels(), cachedGenerations);
     }
 
     public static void addGeneration(ServerLevel level, String generation) {
@@ -77,5 +97,9 @@ public class SpawnFactors implements SpawningInfluence {
     }
 
     public static Set<String> getCachedGenerations() { return cachedGenerations; }
-    public static void resetCache() { cachedGenerations = Set.of(); SpawnStats.reset(); }
+
+    public static void resetCache() {
+        cachedGenerations = Set.of();
+        SpawnStats.reset();
+    }
 }
