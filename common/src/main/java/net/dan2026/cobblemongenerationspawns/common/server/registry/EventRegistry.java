@@ -1,24 +1,14 @@
-/*
- *
- * Cobblemon: Generation Spawning - A NeoForge Minecraft Mod.
- *
- * Copyright (c) 2026 DAN2026. All rights reserved.
- *
- * This software is licensed under the CobblemonGenerationSpawning License v1.0.
- *  A copy of this License should have been included with this software.
- *  If not, you can obtain a copy at [https://github.com/DAN2026/CobblemonGenerationSpawning/blob/master/LICENSE].
- */
-
 package net.dan2026.cobblemongenerationspawns.common.server.registry;
 
 import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import com.cobblemon.mod.common.api.events.cooking.PokeSnackSpawnPokemonEvent;
 import com.cobblemon.mod.common.api.events.entity.SpawnEvent;
-import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import com.cobblemon.mod.common.api.reactive.ObservableSubscription;
 import com.cobblemon.mod.common.api.spawning.detail.PokemonSpawnDetail;
-import net.dan2026.cobblemongenerationspawns.common.server.spawns.SpawnFactors;\nimport net.dan2026.cobblemongenerationspawns.common.server.spawns.SpawnStats;
+import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
+import net.dan2026.cobblemongenerationspawns.common.server.spawns.SpawnFactors;
+import net.dan2026.cobblemongenerationspawns.common.server.spawns.SpawnStats;
 
 public final class EventRegistry {
     private static ObservableSubscription<PokeSnackSpawnPokemonEvent.Pre> pokeSnackSubscription;
@@ -34,17 +24,11 @@ public final class EventRegistry {
             }
         });
 
-        // Defense in depth: this event is fired by BestSpawner immediately before
-        // the Pokemon is inserted into the world. Cobblemon 1.8.x explicitly
-        // honors cancellation here, so this catches natural/fishing/snack spawns
-        // even if their spawner missed our earlier SpawningInfluence registration.
         pokemonSpawnSubscription = CobblemonEvents.POKEMON_ENTITY_SPAWN.subscribe(Priority.HIGHEST, event -> {
             var species = event.getEntity().getPokemon().getSpecies();
             boolean allowed = SpawnFactors.matchesActiveGeneration(species);
             SpawnStats.record(SpawnStats.Source.FINAL_EVENT, allowed, species == null ? null : species.getName());
-            if (!allowed) {
-                event.cancel();
-            }
+            if (!allowed) event.cancel();
         });
     }
 
