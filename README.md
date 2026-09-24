@@ -1,3 +1,11 @@
+> [!IMPORTANT]
+> **Proyecto archivado / sustituido.**
+>
+> El desarrollo activo continúa en **Zian Utilities**:
+> https://github.com/IANBLK/Zian-Utilities
+>
+> Este repositorio se conserva únicamente como historial técnico del antiguo proyecto de control de generaciones. No debe utilizarse como base del nuevo desarrollo.
+
 # Zian Generation Spawns
 
 Adaptación de CobblemonGenerationSpawns de **DAN2026**, mantenida para el proyecto de **ZIANBLK**. Objetivo: Minecraft 1.21.1, NeoForge y Cobblemon 1.8.1.
